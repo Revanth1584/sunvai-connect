@@ -8,6 +8,7 @@ import {
 import sunvaiLogo from '@/assets/sunvai-logo.png';
 import kgrcetLogo from '@/assets/kgrcet-logo.png';
 import { useState } from 'react';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const { user, logout } = useAuth();
@@ -120,6 +121,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
             </h1>
           </div>
           <div className="flex items-center gap-3">
+            <ThemeToggle />
             <img src={kgrcetLogo} alt="KGRCET" className="h-8 w-8" />
             <span className="text-sm font-medium text-muted-foreground hidden md:inline">KGRCET, Hyderabad</span>
           </div>

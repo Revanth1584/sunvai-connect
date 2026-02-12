@@ -5,6 +5,7 @@ import { DEMO_USERS, UserRole } from '@/lib/types';
 import { Shield, Users, GraduationCap, Building2, Eye, UserCheck } from 'lucide-react';
 import sunvaiLogo from '@/assets/sunvai-logo.png';
 import kgrcetLogo from '@/assets/kgrcet-logo.png';
+import ThemeToggle from '@/components/ThemeToggle';
 
 const roleIcons: Record<UserRole, React.ReactNode> = {
   student: <GraduationCap className="h-5 w-5" />,
@@ -42,6 +43,7 @@ const LoginPage = () => {
           </div>
         </div>
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <img src={kgrcetLogo} alt="KGRCET" className="h-10 w-10" />
           <div className="hidden sm:block text-right">
             <p className="text-sm font-semibold text-foreground">KGRCET</p>
