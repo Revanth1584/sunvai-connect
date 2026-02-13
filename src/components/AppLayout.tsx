@@ -2,8 +2,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/lib/auth-context';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
-  LayoutDashboard, FileText, Vote, Users, Settings, LogOut,
-  MessageSquarePlus, BarChart3, Shield, Eye, ChevronLeft, ChevronRight, Menu,
+  LayoutDashboard, FileText, Vote, Users, LogOut,
+  MessageSquarePlus, BarChart3, Shield, Eye, ChevronLeft, ChevronRight,
 } from 'lucide-react';
 import sunvaiLogo from '@/assets/sunvai-logo.png';
 import kgrcetLogo from '@/assets/kgrcet-logo.png';
@@ -17,33 +17,53 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
   if (!user) return null;
 
-  const studentLinks = [
-    { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-    { to: '/submit', icon: MessageSquarePlus, label: 'Submit Complaint' },
-    { to: '/my-complaints', icon: FileText, label: 'My Complaints' },
-    { to: '/voting', icon: Vote, label: 'Voting' },
-  ];
+  const getLinks = () => {
+    switch (user.role) {
+      case 'student':
+        return [
+          { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+          { to: '/submit', icon: MessageSquarePlus, label: 'Submit Complaint' },
+          { to: '/my-complaints', icon: FileText, label: 'My Complaints' },
+          { to: '/voting', icon: Vote, label: 'Voting' },
+        ];
+      case 'faculty':
+        return [
+          { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+          { to: '/my-complaints', icon: FileText, label: 'Assigned Complaints' },
+        ];
+      case 'hod':
+        return [
+          { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+          { to: '/all-complaints', icon: FileText, label: 'Dept. Complaints' },
+          { to: '/committee', icon: Users, label: 'Committee' },
+          { to: '/analytics', icon: BarChart3, label: 'Analytics' },
+        ];
+      case 'committee':
+        return [
+          { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+          { to: '/all-complaints', icon: FileText, label: 'Review Cases' },
+          { to: '/committee', icon: Shield, label: 'Committee' },
+          { to: '/analytics', icon: BarChart3, label: 'Analytics' },
+        ];
+      case 'admin':
+        return [
+          { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+          { to: '/all-complaints', icon: FileText, label: 'All Complaints' },
+          { to: '/committee', icon: Users, label: 'Committee' },
+          { to: '/analytics', icon: BarChart3, label: 'Analytics' },
+        ];
+      case 'ombudsman':
+        return [
+          { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
+          { to: '/all-complaints', icon: Eye, label: 'Major Cases' },
+          { to: '/analytics', icon: BarChart3, label: 'Analytics' },
+        ];
+      default:
+        return [];
+    }
+  };
 
-  const adminLinks = [
-    { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-    { to: '/all-complaints', icon: FileText, label: 'All Complaints' },
-    { to: '/committee', icon: Users, label: 'Committee' },
-    { to: '/analytics', icon: BarChart3, label: 'Analytics' },
-  ];
-
-  const facultyLinks = [
-    { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-    { to: '/my-complaints', icon: FileText, label: 'Complaints Against Me' },
-  ];
-
-  const links = user.role === 'student' ? studentLinks
-    : user.role === 'admin' || user.role === 'committee' || user.role === 'hod' ? adminLinks
-    : user.role === 'ombudsman' ? [
-        { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
-        { to: '/all-complaints', icon: FileText, label: 'All Complaints' },
-        { to: '/analytics', icon: BarChart3, label: 'Analytics' },
-      ]
-    : facultyLinks;
+  const links = getLinks();
 
   return (
     <div className="min-h-screen flex w-full bg-background">

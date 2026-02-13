@@ -10,6 +10,7 @@ import LoginPage from "./pages/LoginPage";
 import Dashboard from "./pages/Dashboard";
 import SubmitComplaint from "./pages/SubmitComplaint";
 import ComplaintsList from "./pages/ComplaintsList";
+import ComplaintDetail from "./pages/ComplaintDetail";
 import VotingPage from "./pages/VotingPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import CommitteePage from "./pages/CommitteePage";
@@ -34,6 +35,7 @@ const AppRoutes = () => {
       <Route path="/submit" element={<ProtectedRoute><SubmitComplaint /></ProtectedRoute>} />
       <Route path="/my-complaints" element={<ProtectedRoute><ComplaintsList /></ProtectedRoute>} />
       <Route path="/all-complaints" element={<ProtectedRoute><ComplaintsList /></ProtectedRoute>} />
+      <Route path="/complaint/:id" element={<ProtectedRoute><ComplaintDetail /></ProtectedRoute>} />
       <Route path="/voting" element={<ProtectedRoute><VotingPage /></ProtectedRoute>} />
       <Route path="/analytics" element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>} />
       <Route path="/committee" element={<ProtectedRoute><CommitteePage /></ProtectedRoute>} />
