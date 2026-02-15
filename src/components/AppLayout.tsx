@@ -3,7 +3,7 @@ import { useAuth } from '@/lib/auth-context';
 import { NavLink, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, FileText, Vote, Users, LogOut,
-  MessageSquarePlus, BarChart3, Shield, Eye, ChevronLeft, ChevronRight,
+  MessageSquarePlus, BarChart3, Shield, Eye, ChevronLeft, ChevronRight, Scale,
 } from 'lucide-react';
 import sunvaiLogo from '@/assets/sunvai-logo.png';
 import kgrcetLogo from '@/assets/kgrcet-logo.png';
@@ -18,6 +18,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
   if (!user) return null;
 
   const getLinks = () => {
+    const rights = { to: '/know-your-rights', icon: Scale, label: 'Know Your Rights' };
     switch (user.role) {
       case 'student':
         return [
@@ -25,11 +26,13 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
           { to: '/submit', icon: MessageSquarePlus, label: 'Submit Complaint' },
           { to: '/my-complaints', icon: FileText, label: 'My Complaints' },
           { to: '/voting', icon: Vote, label: 'Voting' },
+          rights,
         ];
       case 'faculty':
         return [
           { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
           { to: '/my-complaints', icon: FileText, label: 'Assigned Complaints' },
+          rights,
         ];
       case 'hod':
         return [
@@ -37,6 +40,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
           { to: '/all-complaints', icon: FileText, label: 'Dept. Complaints' },
           { to: '/committee', icon: Users, label: 'Committee' },
           { to: '/analytics', icon: BarChart3, label: 'Analytics' },
+          rights,
         ];
       case 'committee':
         return [
@@ -44,6 +48,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
           { to: '/all-complaints', icon: FileText, label: 'Review Cases' },
           { to: '/committee', icon: Shield, label: 'Committee' },
           { to: '/analytics', icon: BarChart3, label: 'Analytics' },
+          rights,
         ];
       case 'admin':
         return [
@@ -51,12 +56,14 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
           { to: '/all-complaints', icon: FileText, label: 'All Complaints' },
           { to: '/committee', icon: Users, label: 'Committee' },
           { to: '/analytics', icon: BarChart3, label: 'Analytics' },
+          rights,
         ];
       case 'ombudsman':
         return [
           { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
           { to: '/all-complaints', icon: Eye, label: 'Major Cases' },
           { to: '/analytics', icon: BarChart3, label: 'Analytics' },
+          rights,
         ];
       default:
         return [];
