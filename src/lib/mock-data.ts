@@ -2,7 +2,7 @@ import { Complaint, DashboardStats } from './types';
 
 export const MOCK_COMPLAINTS: Complaint[] = [
   {
-    id: '1', ticketId: 'SUN-2026-0001', studentName: 'Arjun Reddy', rollNumber: '22B01A0501',
+    id: '1', ticketId: 'SUN-2026-0001', studentName: 'Kaushik', rollNumber: '24QM1A05P8',
     department: 'Computer Science & Engineering', year: '3rd', category: 'Academic Issue',
     title: 'Unfair Internal Marks Distribution in DBMS',
     description: 'The internal marks for DBMS subject were distributed without transparency. Several students who attended all classes and submitted assignments on time received lower marks than those who did not. There was no rubric shared beforehand and the faculty refused to show the breakdown when asked. This is affecting the overall GPA of sincere students.',
@@ -12,7 +12,7 @@ export const MOCK_COMPLAINTS: Complaint[] = [
     votingDeadline: '2026-02-19T10:30:00',
     aiSentiment: 'Moderate', aiToxicity: false, aiRiskScore: 62, aiDuplicate: false,
     timeline: [
-      { id: 't1', action: 'Complaint Submitted', actor: 'Arjun Reddy', timestamp: '2026-02-01T10:30:00' },
+      { id: 't1', action: 'Complaint Submitted', actor: 'Kaushik', timestamp: '2026-02-01T10:30:00' },
       { id: 't2', action: 'Status changed to Under Investigation', actor: 'System', timestamp: '2026-02-02T09:00:00' },
       { id: 't3', action: 'Marked for Community Review', actor: 'Dr. Bharath Reddy', timestamp: '2026-02-05T14:20:00' },
     ],
