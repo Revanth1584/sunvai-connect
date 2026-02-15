@@ -80,7 +80,7 @@ export const DEPARTMENTS = [
 ];
 
 export const DEMO_USERS: User[] = [
-  { id: '1', name: 'Arjun Reddy', role: 'student', department: 'Computer Science & Engineering', rollNumber: '22B01A0501', email: 'arjun@kgr.ac.in' },
+  { id: '1', name: 'Kaushik', role: 'student', department: 'Computer Science & Engineering', rollNumber: '24QM1A05P8', email: 'kaushik@kgr.ac.in' },
   { id: '2', name: 'Priya Sharma', role: 'student', department: 'CSE (AI & ML)', rollNumber: '22B01A0612', email: 'priya@kgr.ac.in' },
   { id: '3', name: 'Dr. L Raghu Kumar', role: 'hod', department: 'Computer Science & Engineering', employeeId: 'FAC001', email: 'raghu@kgr.ac.in' },
   { id: '4', name: 'Dr. M. N. Narsaiah', role: 'faculty', department: 'Computer Science & Engineering', employeeId: 'FAC002', email: 'narsaiah@kgr.ac.in' },
