@@ -6,7 +6,7 @@ import { StatusBadge, UrgencyBadge, AIRiskMeter } from '@/components/StatusBadge
 import {
   FileText, Clock, CheckCircle, AlertTriangle, TrendingUp, Users, Shield, Eye, Send,
   BarChart3, GraduationCap, Building2, UserCheck, Vote, Scale, MessageSquarePlus,
-  Activity, Zap, Target, Award, Gavel, BookOpen, Bell,
+  Activity, Zap, Target, Award, Gavel, BookOpen, Bell, ArrowUpRight, Wand2, EyeOff, Lightbulb, Timer,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Complaint } from '@/lib/types';
@@ -85,6 +85,26 @@ const StudentDashboard = ({ complaints, navigate, user }: any) => (
           <stat.icon className={`h-6 w-6 mx-auto mb-2 ${stat.color}`} />
           <p className="text-2xl font-bold font-display text-foreground"><AnimatedCounter end={stat.value} /></p>
           <p className="text-xs text-muted-foreground mt-1">{stat.label}</p>
+        </motion.div>
+      ))}
+    </div>
+
+    {/* Platform Features */}
+    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+      {[
+        { icon: EyeOff, label: 'Anonymous Submissions', desc: 'Your identity stays confidential', color: 'text-violet-500 bg-violet-500/10' },
+        { icon: Wand2, label: 'AI Auto-Correction', desc: 'Smart grammar fixes before submit', color: 'text-blue-500 bg-blue-500/10' },
+        { icon: Timer, label: 'Auto-Escalation', desc: '7-day HoD / 15-day Principal', color: 'text-amber-500 bg-amber-500/10' },
+      ].map((feat, i) => (
+        <motion.div key={feat.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
+          className="glass-card rounded-xl p-3 flex items-center gap-3">
+          <div className={`w-9 h-9 rounded-lg ${feat.color} flex items-center justify-center flex-shrink-0`}>
+            <feat.icon className="h-4 w-4" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-xs font-semibold text-foreground truncate">{feat.label}</p>
+            <p className="text-xs text-muted-foreground truncate">{feat.desc}</p>
+          </div>
         </motion.div>
       ))}
     </div>
@@ -315,6 +335,27 @@ const AdminDashboard = ({ complaints, navigate, user }: any) => (
       </div>
     </div>
 
+    {/* Admin Feature Highlights */}
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+      {[
+        { icon: EyeOff, label: 'Anonymous Protection', desc: 'Student identities hidden', color: 'text-violet-500 bg-violet-500/10' },
+        { icon: ArrowUpRight, label: 'Multi-Level Routing', desc: 'HoD → Principal → Director', color: 'text-blue-500 bg-blue-500/10' },
+        { icon: Timer, label: 'Auto-Escalation', desc: '7/15 day deadlines', color: 'text-amber-500 bg-amber-500/10' },
+        { icon: Lightbulb, label: 'AI Recommendations', desc: 'Smart resolution suggestions', color: 'text-emerald-500 bg-emerald-500/10' },
+      ].map((feat, i) => (
+        <motion.div key={feat.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
+          className="glass-card rounded-xl p-3 flex items-center gap-3">
+          <div className={`w-9 h-9 rounded-lg ${feat.color} flex items-center justify-center flex-shrink-0`}>
+            <feat.icon className="h-4 w-4" />
+          </div>
+          <div className="min-w-0">
+            <p className="text-xs font-semibold text-foreground truncate">{feat.label}</p>
+            <p className="text-xs text-muted-foreground truncate">{feat.desc}</p>
+          </div>
+        </motion.div>
+      ))}
+    </div>
+
     <ComplaintList title="All Complaints" complaints={complaints} navigate={navigate} />
   </div>
 );
@@ -384,10 +425,22 @@ const ComplaintList = ({ title, complaints, navigate }: { title: string; complai
                 <span className="text-xs font-mono text-muted-foreground">{c.ticketId}</span>
                 <StatusBadge status={c.status} />
                 <UrgencyBadge urgency={c.urgency} />
+                <span className={`text-xs px-1.5 py-0.5 rounded flex items-center gap-0.5 ${
+                  c.routingLevel === 'Director' ? 'bg-destructive/10 text-destructive' :
+                  c.routingLevel === 'Principal' ? 'bg-warning/10 text-warning' :
+                  'bg-primary/10 text-primary'
+                }`}>
+                  <ArrowUpRight className="h-2.5 w-2.5" /> {c.routingLevel}
+                </span>
+                {c.autoEscalated && (
+                  <span className="text-xs px-1.5 py-0.5 rounded bg-destructive/10 text-destructive flex items-center gap-0.5">
+                    <Zap className="h-2.5 w-2.5" /> Auto-Escalated
+                  </span>
+                )}
               </div>
               <p className="font-medium text-foreground text-sm truncate group-hover:text-primary transition-colors">{c.title}</p>
               <p className="text-xs text-muted-foreground mt-0.5">
-                {c.anonymous ? 'Anonymous' : c.studentName} · {c.department} · {c.category}
+                {c.anonymous ? '🔒 Anonymous' : c.studentName} · {c.department} · {c.category}
               </p>
             </div>
             <div className="text-right flex-shrink-0">
