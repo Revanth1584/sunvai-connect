@@ -22,6 +22,7 @@ export type ComplaintCategory =
 
 export type ComplaintStatus = 'Pending Review' | 'Under Investigation' | 'Community Review' | 'Escalated' | 'Resolved' | 'Dismissed';
 export type UrgencyLevel = 'Low' | 'Medium' | 'High';
+export type RoutingLevel = 'HoD' | 'Principal' | 'Director';
 
 export interface Complaint {
   id: string;
@@ -35,6 +36,7 @@ export interface Complaint {
   description: string;
   anonymous: boolean;
   urgency: UrgencyLevel;
+  routingLevel: RoutingLevel;
   status: ComplaintStatus;
   createdAt: string;
   updatedAt: string;
@@ -42,15 +44,19 @@ export interface Complaint {
   rejectVotes: number;
   totalEligibleVoters: number;
   votingDeadline?: string;
+  escalationDeadline?: string;
+  autoEscalated?: boolean;
   aiSentiment?: 'Low' | 'Moderate' | 'High Risk';
   aiToxicity?: boolean;
   aiRiskScore?: number;
   aiDuplicate?: boolean;
+  aiCorrected?: boolean;
   evidence?: string[];
   timeline: TimelineEvent[];
   facultyResponse?: string;
   committeeDecision?: string;
   committeeNotes?: string;
+  aiRecommendations?: { title: string; description: string }[];
 }
 
 export interface TimelineEvent {

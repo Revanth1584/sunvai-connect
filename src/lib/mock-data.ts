@@ -6,15 +6,18 @@ export const MOCK_COMPLAINTS: Complaint[] = [
     department: 'Computer Science & Engineering', year: '3rd', category: 'Academic Issue',
     title: 'Unfair Internal Marks Distribution in DBMS',
     description: 'The internal marks for DBMS subject were distributed without transparency. Several students who attended all classes and submitted assignments on time received lower marks than those who did not. There was no rubric shared beforehand and the faculty refused to show the breakdown when asked. This is affecting the overall GPA of sincere students.',
-    anonymous: false, urgency: 'High', status: 'Community Review',
+    anonymous: false, urgency: 'High', routingLevel: 'HoD', status: 'Community Review',
     createdAt: '2026-02-01T10:30:00', updatedAt: '2026-02-05T14:20:00',
     supportVotes: 24, rejectVotes: 3, totalEligibleVoters: 120,
     votingDeadline: '2026-02-19T10:30:00',
-    aiSentiment: 'Moderate', aiToxicity: false, aiRiskScore: 62, aiDuplicate: false,
+    escalationDeadline: '2026-02-08T10:30:00',
+    aiSentiment: 'Moderate', aiToxicity: false, aiRiskScore: 62, aiDuplicate: false, aiCorrected: true,
     timeline: [
       { id: 't1', action: 'Complaint Submitted', actor: 'Kaushik', timestamp: '2026-02-01T10:30:00' },
-      { id: 't2', action: 'Status changed to Under Investigation', actor: 'System', timestamp: '2026-02-02T09:00:00' },
-      { id: 't3', action: 'Marked for Community Review', actor: 'Dr. Bharath Reddy', timestamp: '2026-02-05T14:20:00' },
+      { id: 't2', action: 'AI Auto-Correction Applied', actor: 'SUNVAI AI', timestamp: '2026-02-01T10:30:05' },
+      { id: 't3', action: 'Routed to HoD – CSE', actor: 'System', timestamp: '2026-02-01T10:31:00' },
+      { id: 't4', action: 'Status changed to Under Investigation', actor: 'System', timestamp: '2026-02-02T09:00:00' },
+      { id: 't5', action: 'Marked for Community Review', actor: 'Dr. Bharath Reddy', timestamp: '2026-02-05T14:20:00' },
     ],
   },
   {
@@ -22,14 +25,22 @@ export const MOCK_COMPLAINTS: Complaint[] = [
     department: 'CSE (AI & ML)', year: '2nd', category: 'Harassment',
     title: 'Verbal Harassment by Lab Instructor',
     description: 'A lab instructor has been using derogatory language and singling out certain students during practical sessions. Multiple students have witnessed this but are afraid to speak up. The behavior has been ongoing for over two months and is creating a hostile learning environment that affects concentration and mental health.',
-    anonymous: true, urgency: 'High', status: 'Escalated',
+    anonymous: true, urgency: 'High', routingLevel: 'Principal', status: 'Escalated',
     createdAt: '2026-01-25T08:15:00', updatedAt: '2026-02-08T11:00:00',
     supportVotes: 45, rejectVotes: 2, totalEligibleVoters: 90,
+    escalationDeadline: '2026-02-01T08:15:00', autoEscalated: true,
     aiSentiment: 'High Risk', aiToxicity: false, aiRiskScore: 88, aiDuplicate: false,
+    aiRecommendations: [
+      { title: 'Immediate Suspension Pending Inquiry', description: 'Temporarily suspend the accused instructor from lab duties while a formal investigation is conducted.' },
+      { title: 'Anonymous Witness Statements', description: 'Collect confidential statements from other students to corroborate the complaint.' },
+      { title: 'Counseling Support', description: 'Provide affected students access to the college counseling center for emotional support.' },
+    ],
     timeline: [
       { id: 't1', action: 'Complaint Submitted (Anonymous)', actor: 'Anonymous', timestamp: '2026-01-25T08:15:00' },
-      { id: 't2', action: 'Community Voting Completed – 96% Support', actor: 'System', timestamp: '2026-02-05T08:15:00' },
-      { id: 't3', action: 'Escalated to Grievance Committee', actor: 'System', timestamp: '2026-02-08T11:00:00' },
+      { id: 't2', action: 'Routed to Principal (Harassment Category)', actor: 'System', timestamp: '2026-01-25T08:16:00' },
+      { id: 't3', action: 'Community Voting Completed – 96% Support', actor: 'System', timestamp: '2026-02-05T08:15:00' },
+      { id: 't4', action: '⚡ Auto-Escalated (Unresolved > 7 days at HoD level)', actor: 'System', timestamp: '2026-02-01T08:15:00' },
+      { id: 't5', action: 'Escalated to Grievance Committee', actor: 'System', timestamp: '2026-02-08T11:00:00' },
     ],
   },
   {
@@ -37,12 +48,15 @@ export const MOCK_COMPLAINTS: Complaint[] = [
     department: 'Civil Engineering', year: '2nd', category: 'Infrastructure',
     title: 'Broken AC and Poor Ventilation in Block C Classrooms',
     description: 'The air conditioning in Block C classrooms has not been functional for over 3 weeks. Students are finding it difficult to concentrate during afternoon lectures due to extreme heat. Multiple complaints to the maintenance department have gone unanswered. Requesting urgent repair.',
-    anonymous: false, urgency: 'Medium', status: 'Pending Review',
+    anonymous: false, urgency: 'Medium', routingLevel: 'HoD', status: 'Pending Review',
     createdAt: '2026-02-10T16:45:00', updatedAt: '2026-02-10T16:45:00',
     supportVotes: 0, rejectVotes: 0, totalEligibleVoters: 60,
-    aiSentiment: 'Low', aiToxicity: false, aiRiskScore: 25, aiDuplicate: false,
+    escalationDeadline: '2026-02-17T16:45:00',
+    aiSentiment: 'Low', aiToxicity: false, aiRiskScore: 25, aiDuplicate: false, aiCorrected: true,
     timeline: [
       { id: 't1', action: 'Complaint Submitted', actor: 'Kavitha Nair', timestamp: '2026-02-10T16:45:00' },
+      { id: 't2', action: 'AI Auto-Correction Applied', actor: 'SUNVAI AI', timestamp: '2026-02-10T16:45:05' },
+      { id: 't3', action: 'Routed to HoD – Civil Engineering', actor: 'System', timestamp: '2026-02-10T16:46:00' },
     ],
   },
   {
@@ -50,14 +64,15 @@ export const MOCK_COMPLAINTS: Complaint[] = [
     department: 'Electronics & Communication Engineering', year: '4th', category: 'Exam/Marks Issue',
     title: 'Exam Answer Sheet Not Evaluated Properly',
     description: 'My answer sheet for the mid-semester exam in Digital Signal Processing was not evaluated properly. I answered all 5 questions, but marks were given only for 3 answers. When I approached the faculty, they dismissed me saying the answers were incorrect, but I have screenshots of the textbook references. Requesting re-evaluation.',
-    anonymous: false, urgency: 'Medium', status: 'Resolved',
+    anonymous: false, urgency: 'Medium', routingLevel: 'HoD', status: 'Resolved',
     createdAt: '2026-01-15T12:00:00', updatedAt: '2026-02-01T10:00:00',
     supportVotes: 12, rejectVotes: 8, totalEligibleVoters: 75,
     aiSentiment: 'Moderate', aiToxicity: false, aiRiskScore: 40, aiDuplicate: true,
     timeline: [
       { id: 't1', action: 'Complaint Submitted', actor: 'Ravi Kumar', timestamp: '2026-01-15T12:00:00' },
-      { id: 't2', action: 'Assigned to Faculty', actor: 'HOD', timestamp: '2026-01-16T09:00:00' },
-      { id: 't3', action: 'Re-evaluation completed. Marks updated.', actor: 'Faculty', timestamp: '2026-02-01T10:00:00' },
+      { id: 't2', action: 'Routed to HoD – ECE', actor: 'System', timestamp: '2026-01-15T12:01:00' },
+      { id: 't3', action: 'Assigned to Faculty', actor: 'HOD', timestamp: '2026-01-16T09:00:00' },
+      { id: 't4', action: 'Re-evaluation completed. Marks updated.', actor: 'Faculty', timestamp: '2026-02-01T10:00:00' },
     ],
   },
   {
@@ -65,31 +80,39 @@ export const MOCK_COMPLAINTS: Complaint[] = [
     department: 'Mechanical Engineering', year: '3rd', category: 'Administration Delay',
     title: 'Scholarship Amount Not Credited for 3 Months',
     description: 'My government scholarship amount has not been credited for the past 3 months. The administration office keeps saying they will look into it but no action has been taken. This is causing financial difficulties and I may not be able to continue my studies if this is not resolved immediately.',
-    anonymous: false, urgency: 'High', status: 'Under Investigation',
+    anonymous: false, urgency: 'High', routingLevel: 'Principal', status: 'Under Investigation',
     createdAt: '2026-02-05T09:30:00', updatedAt: '2026-02-09T15:00:00',
     supportVotes: 8, rejectVotes: 0, totalEligibleVoters: 80,
+    escalationDeadline: '2026-02-20T09:30:00', autoEscalated: false,
     aiSentiment: 'High Risk', aiToxicity: false, aiRiskScore: 75, aiDuplicate: false,
+    aiRecommendations: [
+      { title: 'Expedite Accounts Review', description: 'Direct the accounts department to prioritize this case and provide a status update within 48 hours.' },
+      { title: 'Interim Financial Support', description: 'Consider providing interim financial assistance while the scholarship issue is being resolved.' },
+      { title: 'Escalate to Government Liaison', description: 'Contact the government scholarship authority directly to trace the disbursement status.' },
+    ],
     timeline: [
       { id: 't1', action: 'Complaint Submitted', actor: 'Sneha Patel', timestamp: '2026-02-05T09:30:00' },
-      { id: 't2', action: 'Forwarded to Accounts Department', actor: 'Admin', timestamp: '2026-02-06T10:00:00' },
-      { id: 't3', action: 'Under Investigation by Accounts', actor: 'Accounts', timestamp: '2026-02-09T15:00:00' },
+      { id: 't2', action: 'Routed to Principal (High Urgency)', actor: 'System', timestamp: '2026-02-05T09:31:00' },
+      { id: 't3', action: 'Forwarded to Accounts Department', actor: 'Admin', timestamp: '2026-02-06T10:00:00' },
+      { id: 't4', action: 'Under Investigation by Accounts', actor: 'Accounts', timestamp: '2026-02-09T15:00:00' },
     ],
   },
 ];
 
-// Faculty-specific complaints (complaints related to faculty members)
 export const FACULTY_COMPLAINTS: Complaint[] = [
   {
     id: 'f1', ticketId: 'SUN-2026-0010', studentName: 'Anonymous', rollNumber: 'HIDDEN',
     department: 'Computer Science & Engineering', year: '2nd', category: 'Faculty Misconduct',
     title: 'Faculty Not Following Syllabus Schedule',
     description: 'The faculty member teaching Data Structures has deviated significantly from the syllabus schedule. Over 40% of the syllabus remains uncovered with only 3 weeks left before exams. Students are concerned about exam preparation as the topics covered in class do not align with the university question paper pattern.',
-    anonymous: true, urgency: 'Medium', status: 'Pending Review',
+    anonymous: true, urgency: 'Medium', routingLevel: 'HoD', status: 'Pending Review',
     createdAt: '2026-02-08T11:00:00', updatedAt: '2026-02-08T11:00:00',
     supportVotes: 0, rejectVotes: 0, totalEligibleVoters: 65,
+    escalationDeadline: '2026-02-15T11:00:00',
     aiSentiment: 'Moderate', aiToxicity: false, aiRiskScore: 45, aiDuplicate: false,
     timeline: [
       { id: 't1', action: 'Complaint Submitted (Anonymous)', actor: 'Anonymous', timestamp: '2026-02-08T11:00:00' },
+      { id: 't2', action: 'Routed to HoD – CSE', actor: 'System', timestamp: '2026-02-08T11:01:00' },
     ],
   },
   {
@@ -97,13 +120,14 @@ export const FACULTY_COMPLAINTS: Complaint[] = [
     department: 'Computer Science & Engineering', year: '3rd', category: 'Academic Issue',
     title: 'Late Assignment Grading – No Feedback Given',
     description: 'Assignment submissions for Software Engineering were collected 6 weeks ago but no marks or feedback have been returned. When students inquired, the faculty said they are busy. This delays our ability to improve in subsequent assignments and impacts internal marks calculation.',
-    anonymous: false, urgency: 'Low', status: 'Under Investigation',
+    anonymous: false, urgency: 'Low', routingLevel: 'HoD', status: 'Under Investigation',
     createdAt: '2026-02-03T14:00:00', updatedAt: '2026-02-10T09:00:00',
     supportVotes: 5, rejectVotes: 1, totalEligibleVoters: 70,
     aiSentiment: 'Low', aiToxicity: false, aiRiskScore: 30, aiDuplicate: false,
     timeline: [
       { id: 't1', action: 'Complaint Submitted', actor: 'Meera Joshi', timestamp: '2026-02-03T14:00:00' },
-      { id: 't2', action: 'Forwarded to Faculty for Response', actor: 'HOD – CSE', timestamp: '2026-02-10T09:00:00' },
+      { id: 't2', action: 'Routed to HoD – CSE', actor: 'System', timestamp: '2026-02-03T14:01:00' },
+      { id: 't3', action: 'Forwarded to Faculty for Response', actor: 'HOD – CSE', timestamp: '2026-02-10T09:00:00' },
     ],
   },
   {
@@ -111,32 +135,36 @@ export const FACULTY_COMPLAINTS: Complaint[] = [
     department: 'Computer Science & Engineering', year: '3rd', category: 'Faculty Misconduct',
     title: 'Discrimination in Lab Viva Evaluation',
     description: 'During the Operating Systems lab viva, certain students were asked significantly easier questions while others were grilled on advanced topics. There appears to be bias in evaluation. Multiple students have noticed this pattern across several viva sessions this semester.',
-    anonymous: true, urgency: 'High', status: 'Community Review',
+    anonymous: true, urgency: 'High', routingLevel: 'Principal', status: 'Community Review',
     createdAt: '2026-01-28T09:30:00', updatedAt: '2026-02-06T12:00:00',
     supportVotes: 32, rejectVotes: 5, totalEligibleVoters: 70,
     votingDeadline: '2026-02-20T09:30:00',
+    escalationDeadline: '2026-02-04T09:30:00', autoEscalated: true,
     aiSentiment: 'High Risk', aiToxicity: false, aiRiskScore: 72, aiDuplicate: false,
     timeline: [
       { id: 't1', action: 'Complaint Submitted (Anonymous)', actor: 'Anonymous', timestamp: '2026-01-28T09:30:00' },
-      { id: 't2', action: 'Marked for Community Review', actor: 'Dr. Bharath Reddy', timestamp: '2026-02-06T12:00:00' },
+      { id: 't2', action: 'Routed to HoD – CSE', actor: 'System', timestamp: '2026-01-28T09:31:00' },
+      { id: 't3', action: '⚡ Auto-Escalated to Principal (Unresolved > 7 days)', actor: 'System', timestamp: '2026-02-04T09:30:00' },
+      { id: 't4', action: 'Marked for Community Review', actor: 'Dr. Bharath Reddy', timestamp: '2026-02-06T12:00:00' },
     ],
   },
 ];
 
-// HOD-specific complaints (department-level issues, different from faculty complaints)
 export const HOD_COMPLAINTS: Complaint[] = [
   {
     id: 'h1', ticketId: 'SUN-2026-0020', studentName: 'Priya Sharma', rollNumber: '22B01A0612',
     department: 'CSE (AI & ML)', year: '2nd', category: 'Infrastructure',
     title: 'AI Lab Computers Running Outdated Software',
     description: 'The AI & ML lab computers are running Python 3.6 and TensorFlow 1.x which are severely outdated. Students cannot run modern deep learning frameworks. Lab exercises from the textbook require Python 3.10+ and PyTorch 2.0. This is hindering practical learning in the department.',
-    anonymous: false, urgency: 'High', status: 'Under Investigation',
+    anonymous: false, urgency: 'High', routingLevel: 'HoD', status: 'Under Investigation',
     createdAt: '2026-02-04T10:00:00', updatedAt: '2026-02-07T14:00:00',
     supportVotes: 18, rejectVotes: 0, totalEligibleVoters: 60,
+    escalationDeadline: '2026-02-11T10:00:00',
     aiSentiment: 'Moderate', aiToxicity: false, aiRiskScore: 55, aiDuplicate: false,
     timeline: [
       { id: 't1', action: 'Complaint Submitted', actor: 'Priya Sharma', timestamp: '2026-02-04T10:00:00' },
-      { id: 't2', action: 'Forwarded to IT Department', actor: 'HOD – CSE (AI&ML)', timestamp: '2026-02-07T14:00:00' },
+      { id: 't2', action: 'Routed to HoD – CSE (AI&ML)', actor: 'System', timestamp: '2026-02-04T10:01:00' },
+      { id: 't3', action: 'Forwarded to IT Department', actor: 'HOD – CSE (AI&ML)', timestamp: '2026-02-07T14:00:00' },
     ],
   },
   {
@@ -144,12 +172,14 @@ export const HOD_COMPLAINTS: Complaint[] = [
     department: 'Computer Science & Engineering', year: '2nd', category: 'Academic Issue',
     title: 'Timetable Clash Between Core Subjects',
     description: 'There is a timetable clash between Computer Networks and Database Management System labs for Section B. Both are scheduled on Wednesday 2-5 PM. Students have been shuttling between labs for 3 weeks. The timetable committee has not responded to emails.',
-    anonymous: false, urgency: 'Medium', status: 'Pending Review',
+    anonymous: false, urgency: 'Medium', routingLevel: 'HoD', status: 'Pending Review',
     createdAt: '2026-02-09T08:30:00', updatedAt: '2026-02-09T08:30:00',
     supportVotes: 0, rejectVotes: 0, totalEligibleVoters: 65,
+    escalationDeadline: '2026-02-16T08:30:00',
     aiSentiment: 'Moderate', aiToxicity: false, aiRiskScore: 48, aiDuplicate: false,
     timeline: [
       { id: 't1', action: 'Complaint Submitted', actor: 'Vikram Rao', timestamp: '2026-02-09T08:30:00' },
+      { id: 't2', action: 'Routed to HoD – CSE', actor: 'System', timestamp: '2026-02-09T08:31:00' },
     ],
   },
   {
@@ -157,14 +187,17 @@ export const HOD_COMPLAINTS: Complaint[] = [
     department: 'Computer Science & Engineering', year: '4th', category: 'Administration Delay',
     title: 'Placement Cell Not Sharing Interview Schedules on Time',
     description: 'The placement cell is sharing company interview schedules with less than 12 hours notice. Several final-year students have missed opportunities because they could not prepare on such short notice. Some companies visited without any prior announcement on the department notice board.',
-    anonymous: true, urgency: 'High', status: 'Community Review',
+    anonymous: true, urgency: 'High', routingLevel: 'Principal', status: 'Community Review',
     createdAt: '2026-01-30T07:00:00', updatedAt: '2026-02-05T10:00:00',
     supportVotes: 38, rejectVotes: 4, totalEligibleVoters: 85,
     votingDeadline: '2026-02-18T07:00:00',
+    escalationDeadline: '2026-02-06T07:00:00', autoEscalated: true,
     aiSentiment: 'High Risk', aiToxicity: false, aiRiskScore: 70, aiDuplicate: false,
     timeline: [
       { id: 't1', action: 'Complaint Submitted (Anonymous)', actor: 'Anonymous', timestamp: '2026-01-30T07:00:00' },
-      { id: 't2', action: 'Marked for Community Review', actor: 'Dr. L Raghu Kumar', timestamp: '2026-02-05T10:00:00' },
+      { id: 't2', action: 'Routed to HoD – CSE', actor: 'System', timestamp: '2026-01-30T07:01:00' },
+      { id: 't3', action: '⚡ Auto-Escalated to Principal (Unresolved > 7 days)', actor: 'System', timestamp: '2026-02-06T07:00:00' },
+      { id: 't4', action: 'Marked for Community Review', actor: 'Dr. L Raghu Kumar', timestamp: '2026-02-05T10:00:00' },
     ],
   },
   {
@@ -172,14 +205,15 @@ export const HOD_COMPLAINTS: Complaint[] = [
     department: 'Computer Science & Engineering', year: '3rd', category: 'Others',
     title: 'No Wi-Fi Access in Hostel Block D',
     description: 'Hostel Block D has had no Wi-Fi connectivity for over a month. Students staying in this block cannot access online learning resources, submit assignments, or attend online sessions. The issue has been reported to the IT department multiple times with no resolution.',
-    anonymous: false, urgency: 'Medium', status: 'Resolved',
+    anonymous: false, urgency: 'Medium', routingLevel: 'HoD', status: 'Resolved',
     createdAt: '2026-01-20T18:00:00', updatedAt: '2026-02-03T16:00:00',
     supportVotes: 22, rejectVotes: 1, totalEligibleVoters: 50,
     aiSentiment: 'Low', aiToxicity: false, aiRiskScore: 35, aiDuplicate: false,
     timeline: [
       { id: 't1', action: 'Complaint Submitted', actor: 'Aditya Verma', timestamp: '2026-01-20T18:00:00' },
-      { id: 't2', action: 'Assigned to IT Department', actor: 'HOD – CSE', timestamp: '2026-01-21T09:00:00' },
-      { id: 't3', action: 'Wi-Fi router replaced and connectivity restored', actor: 'IT Dept', timestamp: '2026-02-03T16:00:00' },
+      { id: 't2', action: 'Routed to HoD – CSE', actor: 'System', timestamp: '2026-01-20T18:01:00' },
+      { id: 't3', action: 'Assigned to IT Department', actor: 'HOD – CSE', timestamp: '2026-01-21T09:00:00' },
+      { id: 't4', action: 'Wi-Fi router replaced and connectivity restored', actor: 'IT Dept', timestamp: '2026-02-03T16:00:00' },
     ],
   },
 ];
@@ -228,10 +262,8 @@ export const GGC_MEMBERS = [
   { name: 'Inspector of Police – Moinabad', role: 'External Oversight', email: 'N/A' },
 ];
 
-// All complaints combined for admin/principal view
 export const ALL_COMPLAINTS = [...MOCK_COMPLAINTS, ...FACULTY_COMPLAINTS, ...HOD_COMPLAINTS];
 
-// Major complaints only (High urgency or High Risk AI sentiment or escalated) for ombudsman
 export const OMBUDSMAN_COMPLAINTS = ALL_COMPLAINTS.filter(
   c => c.urgency === 'High' || c.aiSentiment === 'High Risk' || c.status === 'Escalated'
 );
