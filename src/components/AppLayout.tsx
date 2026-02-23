@@ -4,6 +4,7 @@ import { NavLink, useLocation } from 'react-router-dom';
 import {
   LayoutDashboard, FileText, Vote, Users, LogOut,
   MessageSquarePlus, BarChart3, Shield, Eye, ChevronLeft, ChevronRight, Scale,
+  Heart, Megaphone, Brain, Globe,
 } from 'lucide-react';
 import sunvaiLogo from '@/assets/sunvai-logo.png';
 import kgrcetLogo from '@/assets/kgrcet-logo.png';
@@ -18,7 +19,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
   if (!user) return null;
 
   const getLinks = () => {
-    const rights = { to: '/know-your-rights', icon: Scale, label: 'Know Your Rights' };
     switch (user.role) {
       case 'student':
         return [
@@ -26,44 +26,57 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
           { to: '/submit', icon: MessageSquarePlus, label: 'Submit Complaint' },
           { to: '/my-complaints', icon: FileText, label: 'My Complaints' },
           { to: '/voting', icon: Vote, label: 'Voting' },
-          rights,
+          { to: '/policy-voting', icon: Megaphone, label: 'Policy Voting' },
+          { to: '/campus-mood', icon: Heart, label: 'Campus Mood' },
+          { to: '/transparency', icon: Globe, label: 'Transparency' },
+          { to: '/know-your-rights', icon: Scale, label: 'Know Your Rights' },
         ];
       case 'faculty':
         return [
           { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
           { to: '/my-complaints', icon: FileText, label: 'Assigned Complaints' },
-          rights,
+          { to: '/campus-mood', icon: Heart, label: 'Campus Mood' },
+          { to: '/transparency', icon: Globe, label: 'Transparency' },
         ];
       case 'hod':
         return [
           { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
           { to: '/all-complaints', icon: FileText, label: 'Dept. Complaints' },
           { to: '/committee', icon: Users, label: 'Committee' },
+          { to: '/pattern-detection', icon: Brain, label: 'Pattern Detection' },
+          { to: '/campus-mood', icon: Heart, label: 'Campus Mood' },
           { to: '/analytics', icon: BarChart3, label: 'Analytics' },
-          rights,
+          { to: '/transparency', icon: Globe, label: 'Transparency' },
         ];
       case 'committee':
         return [
           { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
           { to: '/all-complaints', icon: FileText, label: 'Review Cases' },
           { to: '/committee', icon: Shield, label: 'Committee' },
+          { to: '/pattern-detection', icon: Brain, label: 'Pattern Detection' },
+          { to: '/campus-mood', icon: Heart, label: 'Campus Mood' },
           { to: '/analytics', icon: BarChart3, label: 'Analytics' },
-          rights,
+          { to: '/transparency', icon: Globe, label: 'Transparency' },
         ];
       case 'admin':
         return [
           { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
           { to: '/all-complaints', icon: FileText, label: 'All Complaints' },
           { to: '/committee', icon: Users, label: 'Committee' },
+          { to: '/pattern-detection', icon: Brain, label: 'Pattern Detection' },
+          { to: '/campus-mood', icon: Heart, label: 'Campus Mood' },
+          { to: '/policy-voting', icon: Megaphone, label: 'Policy Results' },
           { to: '/analytics', icon: BarChart3, label: 'Analytics' },
-          rights,
+          { to: '/transparency', icon: Globe, label: 'Transparency' },
         ];
       case 'ombudsman':
         return [
           { to: '/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
           { to: '/all-complaints', icon: Eye, label: 'Major Cases' },
+          { to: '/pattern-detection', icon: Brain, label: 'Pattern Detection' },
+          { to: '/campus-mood', icon: Heart, label: 'Campus Mood' },
           { to: '/analytics', icon: BarChart3, label: 'Analytics' },
-          rights,
+          { to: '/transparency', icon: Globe, label: 'Transparency' },
         ];
       default:
         return [];
@@ -91,7 +104,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
           </AnimatePresence>
         </div>
 
-        <nav className="flex-1 py-4 px-2 space-y-1">
+        <nav className="flex-1 py-4 px-2 space-y-1 overflow-y-auto scrollbar-thin">
           {links.map(link => {
             const isActive = location.pathname === link.to;
             return (

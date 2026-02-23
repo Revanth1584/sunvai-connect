@@ -267,3 +267,104 @@ export const ALL_COMPLAINTS = [...MOCK_COMPLAINTS, ...FACULTY_COMPLAINTS, ...HOD
 export const OMBUDSMAN_COMPLAINTS = ALL_COMPLAINTS.filter(
   c => c.urgency === 'High' || c.aiSentiment === 'High Risk' || c.status === 'Escalated'
 );
+
+// ===== CAMPUS MOOD DATA =====
+export const CAMPUS_MOOD_DATA = {
+  overall: 3.7,
+  totalResponses: 342,
+  categories: [
+    { name: 'Academics', score: 3.9, trend: 5 },
+    { name: 'Infrastructure', score: 3.2, trend: -3 },
+    { name: 'Faculty Behavior', score: 4.1, trend: 8 },
+    { name: 'Safety', score: 3.8, trend: 2 },
+    { name: 'Canteen & Facilities', score: 3.5, trend: -1 },
+  ],
+  weeklyTrend: [
+    { week: 'W1', score: 3.4 },
+    { week: 'W2', score: 3.5 },
+    { week: 'W3', score: 3.6 },
+    { week: 'W4', score: 3.3 },
+    { week: 'W5', score: 3.7 },
+    { week: 'W6', score: 3.8 },
+    { week: 'W7', score: 3.7 },
+    { week: 'W8', score: 3.7 },
+  ],
+};
+
+// ===== POLICY PROPOSALS =====
+export const POLICY_PROPOSALS = [
+  {
+    id: 'p1', title: 'Extend Library Timing to 11 PM',
+    description: 'Proposal to extend library hours from 8 PM to 11 PM during exam season to accommodate students who prefer studying late.',
+    category: 'Academic', proposedBy: 'Student Council', deadline: '2026-03-05T23:59:00',
+    yesVotes: 156, noVotes: 23, eligibleVoters: 450, urgent: false,
+  },
+  {
+    id: 'p2', title: 'New Canteen Vendor Selection',
+    description: 'Choose between 3 shortlisted vendors for the main canteen contract renewal. Quality and pricing reviews available.',
+    category: 'Campus Life', proposedBy: 'Administration', deadline: '2026-02-28T23:59:00',
+    yesVotes: 89, noVotes: 45, eligibleVoters: 450, urgent: true,
+  },
+  {
+    id: 'p3', title: 'Annual Tech Fest Budget Allocation',
+    description: 'Approve ₹5,00,000 budget for KGRCET TechFusion 2026 — includes guest speakers, workshops, and prize money.',
+    category: 'Campus Life', proposedBy: 'Tech Fest Committee', deadline: '2026-03-10T23:59:00',
+    yesVotes: 210, noVotes: 12, eligibleVoters: 450, urgent: false,
+  },
+  {
+    id: 'p4', title: 'Mandatory Attendance Reduction to 65%',
+    description: 'Proposal to reduce mandatory attendance from 75% to 65% for students with CGPA above 8.0.',
+    category: 'Academic', proposedBy: 'Student Council', deadline: '2026-03-15T23:59:00',
+    yesVotes: 298, noVotes: 67, eligibleVoters: 450, urgent: false,
+  },
+  {
+    id: 'p5', title: 'Install CCTV in All Parking Areas',
+    description: 'Security enhancement proposal to install surveillance cameras in all campus parking zones after recent vehicle theft incidents.',
+    category: 'Infrastructure', proposedBy: 'Security Committee', deadline: '2026-03-01T23:59:00',
+    yesVotes: 178, noVotes: 8, eligibleVoters: 450, urgent: true,
+  },
+];
+
+// ===== PATTERN DETECTION ALERTS =====
+export const PATTERN_ALERTS = [
+  {
+    id: 'pa1', department: 'Computer Science & Engineering', category: 'Faculty Misconduct',
+    pattern: 'Recurring Bias in Lab Evaluation',
+    description: '4 separate complaints about unfair viva evaluation in OS and DBMS labs over 6 weeks. Pattern suggests systemic issue with evaluation criteria.',
+    occurrences: 4, severity: 'critical' as const, firstReported: 'Jan 15, 2026',
+    trendDirection: 'up' as const, autoAlerted: true,
+    aiRecommendation: 'Implement standardized rubric-based lab evaluation across CSE department. Recommend faculty training on unbiased assessment methods.',
+  },
+  {
+    id: 'pa2', department: 'Civil Engineering', category: 'Infrastructure',
+    pattern: 'Persistent HVAC Failures in Block C',
+    description: '3 complaints about non-functional AC in Block C classrooms since December. Maintenance response has been inadequate.',
+    occurrences: 3, severity: 'warning' as const, firstReported: 'Dec 5, 2025',
+    trendDirection: 'stable' as const, autoAlerted: true,
+    aiRecommendation: 'Schedule complete HVAC system audit for Block C. Consider temporary portable cooling solutions until permanent repair.',
+  },
+  {
+    id: 'pa3', department: 'CSE (AI & ML)', category: 'Infrastructure',
+    pattern: 'Outdated Lab Software Complaints',
+    description: 'Multiple students reporting that lab machines run obsolete Python/TensorFlow versions, impacting practical coursework.',
+    occurrences: 5, severity: 'critical' as const, firstReported: 'Nov 20, 2025',
+    trendDirection: 'up' as const, autoAlerted: true,
+    aiRecommendation: 'Allocate IT budget for immediate software upgrade across all AI/ML labs. Set up quarterly update schedule.',
+  },
+  {
+    id: 'pa4', department: 'Mechanical Engineering', category: 'Administration Delay',
+    pattern: 'Scholarship Disbursement Delays',
+    description: '2 students reported scholarship delays exceeding 2 months. Financial hardship cases escalating.',
+    occurrences: 2, severity: 'warning' as const, firstReported: 'Jan 10, 2026',
+    trendDirection: 'stable' as const, autoAlerted: false,
+    aiRecommendation: 'Create direct liaison channel with state scholarship authority. Implement interim emergency fund for affected students.',
+  },
+  {
+    id: 'pa5', department: 'All Departments', category: 'Administration Delay',
+    pattern: 'Placement Cell Communication Gaps',
+    description: 'Cross-department complaints about last-minute interview notifications. 3 separate reports from CSE, ECE, and ME.',
+    occurrences: 3, severity: 'critical' as const, firstReported: 'Jan 25, 2026',
+    trendDirection: 'up' as const, autoAlerted: true,
+    aiRecommendation: 'Mandate 72-hour minimum advance notice for placement drives. Deploy automated SMS/email notification system for placement events.',
+  },
+];
