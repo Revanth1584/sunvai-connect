@@ -15,6 +15,10 @@ import VotingPage from "./pages/VotingPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import CommitteePage from "./pages/CommitteePage";
 import KnowYourRightsPage from "./pages/KnowYourRightsPage";
+import TransparencyDashboard from "./pages/TransparencyDashboard";
+import CampusMoodPage from "./pages/CampusMoodPage";
+import PolicyVotingPage from "./pages/PolicyVotingPage";
+import PatternDetectionPage from "./pages/PatternDetectionPage";
 import AppLayout from "./components/AppLayout";
 import AIAssistant from "./components/AIAssistant";
 import SplashScreen from "./components/SplashScreen";
@@ -49,6 +53,10 @@ const AppRoutes = () => {
         <Route path="/analytics" element={<ProtectedRoute><AnalyticsPage /></ProtectedRoute>} />
         <Route path="/committee" element={<ProtectedRoute><CommitteePage /></ProtectedRoute>} />
         <Route path="/know-your-rights" element={<ProtectedRoute><KnowYourRightsPage /></ProtectedRoute>} />
+        <Route path="/transparency" element={<ProtectedRoute><TransparencyDashboard /></ProtectedRoute>} />
+        <Route path="/campus-mood" element={<ProtectedRoute><CampusMoodPage /></ProtectedRoute>} />
+        <Route path="/policy-voting" element={<ProtectedRoute><PolicyVotingPage /></ProtectedRoute>} />
+        <Route path="/pattern-detection" element={<ProtectedRoute><PatternDetectionPage /></ProtectedRoute>} />
         <Route path="/" element={<Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

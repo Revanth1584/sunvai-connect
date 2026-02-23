@@ -1,12 +1,13 @@
 import { motion } from 'framer-motion';
 import { useAuth } from '@/lib/auth-context';
-import { MOCK_COMPLAINTS, MOCK_STATS, FACULTY_COMPLAINTS, HOD_COMPLAINTS, ALL_COMPLAINTS, OMBUDSMAN_COMPLAINTS, DEPARTMENT_STATS } from '@/lib/mock-data';
+import { MOCK_COMPLAINTS, MOCK_STATS, FACULTY_COMPLAINTS, HOD_COMPLAINTS, ALL_COMPLAINTS, OMBUDSMAN_COMPLAINTS, DEPARTMENT_STATS, CAMPUS_MOOD_DATA, PATTERN_ALERTS } from '@/lib/mock-data';
 import AnimatedCounter from '@/components/AnimatedCounter';
 import { StatusBadge, UrgencyBadge, AIRiskMeter } from '@/components/StatusBadges';
 import {
   FileText, Clock, CheckCircle, AlertTriangle, TrendingUp, Users, Shield, Eye, Send,
   BarChart3, GraduationCap, Building2, UserCheck, Vote, Scale, MessageSquarePlus,
   Activity, Zap, Target, Award, Gavel, BookOpen, Bell, ArrowUpRight, Wand2, EyeOff, Lightbulb, Timer,
+  Heart, Brain, Globe, Megaphone, Smile, Meh, Frown,
 } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Complaint } from '@/lib/types';
@@ -60,6 +61,8 @@ const StudentDashboard = ({ complaints, navigate, user }: any) => (
         { label: 'Submit Complaint', to: '/submit', icon: MessageSquarePlus, gradient: 'from-emerald-500 to-teal-600' },
         { label: 'My Complaints', to: '/my-complaints', icon: FileText, gradient: 'from-blue-500 to-indigo-600' },
         { label: 'Community Voting', to: '/voting', icon: Vote, gradient: 'from-amber-500 to-orange-600' },
+        { label: 'Policy Voting', to: '/policy-voting', icon: Megaphone, gradient: 'from-indigo-500 to-purple-600' },
+        { label: 'Campus Mood', to: '/campus-mood', icon: Heart, gradient: 'from-pink-500 to-rose-600' },
         { label: 'Know Your Rights', to: '/know-your-rights', icon: Scale, gradient: 'from-violet-500 to-purple-600' },
       ].map((action, i) => (
         <motion.div key={action.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
@@ -89,12 +92,12 @@ const StudentDashboard = ({ complaints, navigate, user }: any) => (
       ))}
     </div>
 
-    {/* Platform Features */}
+    {/* Platform Features + Escalation Timeline */}
     <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
       {[
         { icon: EyeOff, label: 'Anonymous Submissions', desc: 'Your identity stays confidential', color: 'text-violet-500 bg-violet-500/10' },
         { icon: Wand2, label: 'AI Auto-Correction', desc: 'Smart grammar fixes before submit', color: 'text-blue-500 bg-blue-500/10' },
-        { icon: Timer, label: 'Auto-Escalation', desc: '7-day HoD / 15-day Principal', color: 'text-amber-500 bg-amber-500/10' },
+        { icon: Timer, label: 'Auto-Escalation', desc: '3d→HoD · 7d→Principal · 10d→Gov. Body', color: 'text-amber-500 bg-amber-500/10' },
       ].map((feat, i) => (
         <motion.div key={feat.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
           className="glass-card rounded-xl p-3 flex items-center gap-3">
@@ -108,6 +111,55 @@ const StudentDashboard = ({ complaints, navigate, user }: any) => (
         </motion.div>
       ))}
     </div>
+
+    {/* Escalation Timeline Visual */}
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}
+      className="glass-card rounded-xl p-5">
+      <h3 className="font-semibold font-display text-foreground mb-4 flex items-center gap-2">
+        <Zap className="h-4 w-4 text-warning" /> Auto-Escalation Timeline
+      </h3>
+      <div className="flex items-center gap-0">
+        {[
+          { day: '3 Days', label: 'HoD Level', color: 'bg-warning' },
+          { day: '7 Days', label: 'Principal Level', color: 'bg-destructive' },
+          { day: '10 Days', label: 'Governing Body', color: 'bg-violet-500' },
+        ].map((step, i) => (
+          <div key={step.day} className="flex-1 flex flex-col items-center relative">
+            <div className={`w-10 h-10 rounded-full ${step.color} flex items-center justify-center text-white text-xs font-bold z-10`}>
+              {i + 1}
+            </div>
+            <p className="text-xs font-semibold text-foreground mt-2">{step.day}</p>
+            <p className="text-xs text-muted-foreground">{step.label}</p>
+            {i < 2 && (
+              <div className={`absolute top-5 left-[55%] w-[90%] h-0.5 ${step.color}/30`} />
+            )}
+          </div>
+        ))}
+      </div>
+      <p className="text-xs text-muted-foreground text-center mt-3">⚡ No manual suppression possible — guaranteed resolution path</p>
+    </motion.div>
+
+    {/* Campus Mood Mini Widget */}
+    <Link to="/campus-mood" className="block">
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }}
+        className="glass-card rounded-xl p-4 hover-glow flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-10 h-10 rounded-lg bg-pink-500/10 flex items-center justify-center">
+            {CAMPUS_MOOD_DATA.overall >= 4 ? <Smile className="h-5 w-5 text-success" /> :
+             CAMPUS_MOOD_DATA.overall >= 3 ? <Meh className="h-5 w-5 text-warning" /> :
+             <Frown className="h-5 w-5 text-destructive" />}
+          </div>
+          <div>
+            <p className="text-sm font-semibold text-foreground">Campus Health Score</p>
+            <p className="text-xs text-muted-foreground">{CAMPUS_MOOD_DATA.totalResponses} responses this week</p>
+          </div>
+        </div>
+        <div className="text-right">
+          <span className="text-2xl font-bold font-display text-foreground">{CAMPUS_MOOD_DATA.overall}</span>
+          <span className="text-sm text-muted-foreground">/5.0</span>
+        </div>
+      </motion.div>
+    </Link>
 
     <ComplaintList title="My Recent Complaints" complaints={complaints} navigate={navigate} />
   </div>
@@ -180,11 +232,12 @@ const HODDashboard = ({ complaints, navigate, user }: any) => (
       </div>
     </motion.div>
 
-    <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
       {[
         { label: 'Dept. Complaints', to: '/all-complaints', icon: FileText, gradient: 'from-violet-500 to-purple-600' },
         { label: 'Committee', to: '/committee', icon: Shield, gradient: 'from-amber-500 to-orange-600' },
-        { label: 'Analytics', to: '/analytics', icon: BarChart3, gradient: 'from-blue-500 to-indigo-600' },
+        { label: 'Pattern Detection', to: '/pattern-detection', icon: Brain, gradient: 'from-orange-500 to-red-600' },
+        { label: 'Campus Mood', to: '/campus-mood', icon: Heart, gradient: 'from-pink-500 to-rose-600' },
       ].map((action, i) => (
         <motion.div key={action.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
           <Link to={action.to} className="glass-card rounded-xl p-4 flex items-center gap-3 hover-glow transition-all group block">
@@ -196,6 +249,23 @@ const HODDashboard = ({ complaints, navigate, user }: any) => (
         </motion.div>
       ))}
     </div>
+
+    {/* Pattern Alert Widget */}
+    {PATTERN_ALERTS.filter(p => p.severity === 'critical').length > 0 && (
+      <Link to="/pattern-detection" className="block">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          className="rounded-xl border-2 border-destructive/30 bg-destructive/5 p-4 flex items-center gap-3 hover-glow cursor-pointer">
+          <Brain className="h-5 w-5 text-destructive flex-shrink-0" />
+          <div className="flex-1">
+            <p className="text-sm font-bold text-foreground">
+              🚨 {PATTERN_ALERTS.filter(p => p.severity === 'critical').length} Critical Patterns Detected
+            </p>
+            <p className="text-xs text-muted-foreground">AI has identified recurring issues requiring immediate attention</p>
+          </div>
+          <ArrowUpRight className="h-4 w-4 text-muted-foreground" />
+        </motion.div>
+      </Link>
+    )}
 
     {/* Department Stats */}
     <div className="glass-card rounded-xl p-5">
@@ -300,9 +370,9 @@ const AdminDashboard = ({ complaints, navigate, user }: any) => (
     <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
       {[
         { label: 'All Complaints', to: '/all-complaints', icon: FileText, gradient: 'from-rose-500 to-red-600' },
-        { label: 'Committee', to: '/committee', icon: Users, gradient: 'from-amber-500 to-orange-600' },
-        { label: 'Analytics', to: '/analytics', icon: BarChart3, gradient: 'from-blue-500 to-indigo-600' },
-        { label: 'Know Your Rights', to: '/know-your-rights', icon: Scale, gradient: 'from-violet-500 to-purple-600' },
+        { label: 'Pattern Detection', to: '/pattern-detection', icon: Brain, gradient: 'from-orange-500 to-red-600' },
+        { label: 'Campus Mood', to: '/campus-mood', icon: Heart, gradient: 'from-pink-500 to-rose-600' },
+        { label: 'Policy Results', to: '/policy-voting', icon: Megaphone, gradient: 'from-indigo-500 to-purple-600' },
       ].map((action, i) => (
         <motion.div key={action.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}>
           <Link to={action.to} className="glass-card rounded-xl p-3 flex items-center gap-3 hover-glow transition-all group block">
@@ -314,6 +384,23 @@ const AdminDashboard = ({ complaints, navigate, user }: any) => (
         </motion.div>
       ))}
     </div>
+
+    {/* Pattern Alert Widget */}
+    {PATTERN_ALERTS.filter(p => p.severity === 'critical').length > 0 && (
+      <Link to="/pattern-detection" className="block">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+          className="rounded-xl border-2 border-destructive/30 bg-destructive/5 p-4 flex items-center gap-3 hover-glow cursor-pointer">
+          <Brain className="h-5 w-5 text-destructive flex-shrink-0" />
+          <div className="flex-1">
+            <p className="text-sm font-bold text-foreground">
+              🚨 {PATTERN_ALERTS.filter(p => p.severity === 'critical').length} Critical Patterns Detected
+            </p>
+            <p className="text-xs text-muted-foreground">AI has identified recurring department-level issues</p>
+          </div>
+          <ArrowUpRight className="h-4 w-4 text-muted-foreground" />
+        </motion.div>
+      </Link>
+    )}
 
     {/* Department Overview */}
     <div className="glass-card rounded-xl p-5">
@@ -340,7 +427,7 @@ const AdminDashboard = ({ complaints, navigate, user }: any) => (
       {[
         { icon: EyeOff, label: 'Anonymous Protection', desc: 'Student identities hidden', color: 'text-violet-500 bg-violet-500/10' },
         { icon: ArrowUpRight, label: 'Multi-Level Routing', desc: 'HoD → Principal → Director', color: 'text-blue-500 bg-blue-500/10' },
-        { icon: Timer, label: 'Auto-Escalation', desc: '7/15 day deadlines', color: 'text-amber-500 bg-amber-500/10' },
+        { icon: Timer, label: 'Auto-Escalation', desc: '3d→HoD · 7d→Principal · 10d→Gov', color: 'text-amber-500 bg-amber-500/10' },
         { icon: Lightbulb, label: 'AI Recommendations', desc: 'Smart resolution suggestions', color: 'text-emerald-500 bg-emerald-500/10' },
       ].map((feat, i) => (
         <motion.div key={feat.label} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
